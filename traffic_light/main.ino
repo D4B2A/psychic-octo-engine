@@ -1,17 +1,21 @@
 volatile bool buttonSchedule = false;
 
 class trafficLight {
-private:
-  byte down_at;
-  byte down;
-  
 public:
-  Button();
-  byte downFor();
-  void resetDown();
-  bool isDown();
-  void turnOn();
-  void turnOff();
+    byte redPin;
+    byte orangePin;
+    byte greenPin;
+
+    byte state;
+
+    trafficLight(byte red, byte orange, byte green){
+        redPin = red;
+        orangePin = orange;
+        greenPin = green;
+
+        state = 0;
+    }
+
 };
 
 
