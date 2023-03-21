@@ -1,8 +1,10 @@
 volatile bool buttonSchedule = false;
 
+mask maskArray[14]; //Max 14 Frames
+
 class trafficLight {
 
-    public:
+    private:
     
     byte redPin;
     byte orangePin;
@@ -14,7 +16,9 @@ class trafficLight {
     
     byte state;
 
-    trafficLight(byte red, byte orange, byte green, byte redGnd, byte orangeGnd,byte greenGnd){
+    public:
+    
+    trafficLight(byte red, byte orange, byte green, byte redGnd, byte orangeGnd,byte greenGnd, mask* maskPointer){
         redPin = red;
         orangePin = orange;
         greenPin = green;
@@ -24,6 +28,18 @@ class trafficLight {
         greenGround = greenGnd;
 
         state = 0;
+    }
+    
+    getFrame(byte GNDpin){
+        if(redGround == GNDpin){
+            *(maskPointer+GNDpin) |= redPin;
+        }
+        else if(orangeGround == GNDpin){
+            *(maskPointer+GNDpin) |= orangePin;
+        }
+        else if(greenGround == GNDpin){
+            *(maskPointer+GNDpin) |= greenPin;
+        }
     }
 
 };
@@ -42,15 +58,15 @@ class mask{
     }
     public:
     
-    mask(bool dataport){
-        port = &dataport;
+    mask(bool *dataport){ //Constructor dataport => port pointer
+        port = dataport;
     }
     
     applyMask(bool on){
         if(on) *port |= getOnMask();
         else *port &= getOfMask();
-        
     }
+    
 }
 
 
