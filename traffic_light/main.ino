@@ -31,18 +31,39 @@ class trafficLight {
     }
     
     getFrame(byte GNDpin){
-        if(redGround == GNDpin){
-            *(maskPointer+GNDpin) |= redPin;
+        bool redState = false;
+        bool orangeState = false;
+        bool greenState = false;
+        
+        switch(state){
+            case 0:
+                redState = true;
+                break:
+            case 1:
+                redState = true;
+                orangeState = true;
+                break;
+            case 2:
+                orangeState = true;
+                break;
+            case 3:
+                greenState = true;
+                break;
         }
-        else if(orangeGround == GNDpin){
-            *(maskPointer+GNDpin) |= orangePin;
+        
+        
+        if((redGround == GNDpin)&redState){
+            *(maskPointer+GNDpin) |= 1<<redPin;
         }
-        else if(greenGround == GNDpin){
-            *(maskPointer+GNDpin) |= greenPin;
+        else if((orangeGround == GNDpin)&orangeState){
+            *(maskPointer+GNDpin) |= 1<<orangePin;
+        }
+        else if((greenGround == GNDpin)&greenState){
+            *(maskPointer+GNDpin) |= 1<<greenPin;
         }
     }
 
-};
+}
 
 class mask{
     private:
