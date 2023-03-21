@@ -1,19 +1,16 @@
-volatile bool buttonSchedule;
+
 
 void setup(){
   pinMode(2,INPUT);
-  attachInterrupt(ISR,INT0,RISING); //INT0 => pin 2
+  EICRA |= 3;
+  EIMSK &= 254;
 }
 
 void loop(){
-  if(buttonSchedule){
+  if(EIFR&1){
     //do something
-    buttonSchedule = false; //reset button flag
+    EIFR &= 254; //reset button flag
   }
 }
 
-void ISR(){
-  char cSREG = SREG; //Save AVR Status Register
-  buttonSchedule = true; //Button pressed Flag
-  SREG = cREG; //Restore AVR Status Register
-}
+
