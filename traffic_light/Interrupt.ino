@@ -13,5 +13,7 @@ void loop(){
 }
 
 void ISR(){
+  char cSREG = SREG; //Save AVR Status Register
   buttonSchedule = true; //Button pressed Flag
+  SREG = cREG; //Restore AVR Status Register
 }
