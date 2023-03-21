@@ -8,6 +8,7 @@ void setup(){
 void loop(){
   if(buttonSchedule){
     //do something
+    buttonSchedule = false; //reset button flag
   }
 }
 
