@@ -52,13 +52,13 @@ class trafficLight {
         }
         
         
-        if((redGround == GNDpin)&redState){
+        if((redGround == GNDpin)&&redState){
             *(maskPointer+GNDpin) |= 1<<redPin;
         }
-        else if((orangeGround == GNDpin)&orangeState){
+        else if((orangeGround == GNDpin)&&orangeState){
             *(maskPointer+GNDpin) |= 1<<orangePin;
         }
-        else if((greenGround == GNDpin)&greenState){
+        else if((greenGround == GNDpin)&&greenState){
             *(maskPointer+GNDpin) |= 1<<greenPin;
         }
     }
@@ -92,5 +92,7 @@ class mask{
 
 
 void setup(){
-  
+    pinMode(2,INPUT);
+    EICRA |= 3;
+    EIMSK &= 254;
 }
