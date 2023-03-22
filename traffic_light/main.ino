@@ -1,6 +1,5 @@
-volatile bool buttonSchedule = false;
-
-mask maskArray[14]; //Max 14 Frames
+mask maskArray[14]; //Max 14 Frames => Stack
+trafficLight trafficLightArray[8]; //Max 8 TrafficLights => Stack
 
 class trafficLight {
 
@@ -30,7 +29,7 @@ class trafficLight {
         state = 0;
     }
     
-    getFrame(byte GNDpin){
+    setFrame(byte GNDpin){
         bool redState = false;
         bool orangeState = false;
         bool greenState = false;
@@ -67,27 +66,39 @@ class trafficLight {
 
 class mask{
     private:
-    byte mask;
-    bool* port;
+    int mask;
     
     getOnMask(){
         return mask;
     }
     
-    getOfMask(){
+    getOffMask(){
         return ~mask;
     }
     public:
     
-    mask(bool *dataport){ //Constructor dataport => port pointer
-        port = dataport;
+    mask(){ //Constructor dataport => port pointer
     }
     
     applyMask(bool on){
-        if(on) *port |= getOnMask();
-        else *port &= getOfMask();
+        if(on){
+            PORTC |= (getOnMask()>>8)&255;
+            PORTD |= getOnMask()&255;
+        }
+        else {
+            PORTC &= (getOffMask()>>8)&255;
+            PORTD &= getOffMask()&255;
+        }
     }
     
+}
+
+void updateFrames(){
+    for(int i = 0; i<13; i++){
+        for(int j = 0; j < sizeof(trafficLightArray); j++){
+            trafficLightArray[j].setFrame(i);
+        }
+    }
 }
 
 
