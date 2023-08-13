@@ -9,7 +9,7 @@ void setup(){
 void loop(){
   if(EIFR&1){
     //do something
-    EIFR /= 1; //reset button flag
+    EIFR |= 1; //reset button flag
   }
 }
 
