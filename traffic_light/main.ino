@@ -3,8 +3,6 @@ trafficLight trafficLightArray[8]; //Max 8 TrafficLights => Stack
 
 const phase[][];
 
-phase = [[]];
-
 class trafficLight {
 
     private:
@@ -106,7 +104,7 @@ void updateFrames(){
 }
 
 void setPhase(byte newphase){
-    for(int i = 0; sizeof(trafficLightArray);i++){
+    for(int i = 0; i < sizeof(trafficLightArray);i++){
         trafficLightArray[i].setState(phase[newphase][i]);
     }
 
