@@ -2,8 +2,9 @@
 
 void setup(){
   pinMode(2,INPUT);
+  EIMSK &= 254; //Disable Interrupt before changing Trigger
   EICRA |= 3;
-  EIMSK &= 254;
+
 }
 
 void loop(){
